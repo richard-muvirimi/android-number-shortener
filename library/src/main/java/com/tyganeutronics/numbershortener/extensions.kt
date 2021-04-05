@@ -55,7 +55,7 @@ fun Number.shorten(
 ): String {
 
     if (units.size != powers.size) {
-        throw IllegalArgumentException("Units List needsto be equal to Powers list")
+        throw IllegalArgumentException("Units List needs to be equal to Powers list")
     }
 
     val ten = 10.0
@@ -81,7 +81,7 @@ fun Number.shorten(
 
             String.format(
                 "%." + result.precision()
-                    .coerceAtMost(precision) + "f %c" + if (round) suffix else "",
+                    .coerceAtMost(precision) + "f %s" + if (round) suffix else "",
                 result,
                 units[powers.indexOf(exp)]
             )
