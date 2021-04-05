@@ -1,0 +1,30 @@
+<resources>
+    <string name="app_name">Number Shortener</string>
+
+    <string name="output_answer">Result:</string>
+
+    <string name="hint_input">Number</string>
+    <string name="hint_suffix">Round Suffix</string>
+    <string name="hint_precision">Precision</string>
+    <string name="hint_round">Round Mode</string>
+
+    <string name="default_suffix" translatable="false">+</string>
+    <string name="default_number" translatable="false">123456789</string>
+    <integer name="default_precision">1</integer>
+
+    <string name="helper_input">Type a number to see how it would be formatted</string>
+
+    <string name="layout_options">Options</string>
+
+    <string name="options_round">Round (nearest hundred/ten)</string>
+    
+    <string-array name="round">
+        <item>ROUND UP</item>
+        <item>ROUND DOWN</item>
+        <item>ROUND CEILING</item>
+        <item>ROUND FLOOR</item>
+        <item>ROUND HALF UP</item>
+        <item>ROUND HALF DOWN</item>
+        <item>ROUND HALF EVEN</item>
+    </string-array>
+</resources>
