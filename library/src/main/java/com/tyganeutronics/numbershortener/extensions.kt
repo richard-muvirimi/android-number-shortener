@@ -54,7 +54,7 @@ fun Number.shorten(
     powers: List<Int> = NumberShort.powers
 ): String {
 
-    if (units.size != powers.size) {
+    if (units.size != powers.size && units.isEmpty()) {
         throw IllegalArgumentException("Units List needs to be equal to Powers list")
     }
 
@@ -71,7 +71,10 @@ fun Number.shorten(
 
             val exp = powers.firstOrNull {
                 //@24 start && end => equal
-                val start = if (it == 24) 27 else powers[(powers.indexOf(it) - 1).coerceAtLeast(0)]
+                val start =
+                    if (it == powers.first()) powers.first() - 1 else powers[(powers.indexOf(it) - 1).coerceAtLeast(
+                        0
+                    )]
                 val end = it
                 ten.pow(start).toBigDecimal() > target && ten.pow(end).toBigDecimal() <= target
             } ?: powers.last()
