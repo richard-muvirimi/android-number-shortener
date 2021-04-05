@@ -4,12 +4,47 @@
 
 Shortens a given number to at most three digits with an SI unit after
 
+[![CI](https://github.com/tygalive/Number-Shortener/workflows/CI/badge.svg?branch=master)](https://github.com/tygalive/Number-Shortener/actions)
+[![JitPack](https://jitpack.io/v/kizitonwose/CalendarView.svg)](https://jitpack.io/#tygalive/Number-Shortener)
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://github.com/tygalive/Number-Shortener/blob/master/LICENSE.md)
+
 ### Samples
 
 1. 987 => 10 h (hecto)
 2. 1234 => 1 k (kilo)
 3. 123456 => 123 k (kilo)
 4. 1234567 => 1 M (mega)
+
+### Installation
+
+#### Jitpack
+
+Full details on how to import
+
+[JitPack](https://jitpack.io/#tygalive/Number-Shortener/1.0)
+
+#### Gradle
+
+**Step 1.**
+Add it in your root build.gradle at the end of repositories:
+
+```
+    allprojects {
+		repositories {
+			...
+			maven { url 'https://jitpack.io' }
+		}
+	}
+```
+
+**Step 2.**
+Add the dependency
+
+```
+    dependencies {
+	        implementation 'com.github.tygalive:Number-Shortener:1.0'
+	}
+```
 
 ### Usage
 
