@@ -13,6 +13,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatCheckBox;
 import androidx.appcompat.widget.AppCompatSpinner;
+import androidx.appcompat.widget.AppCompatTextView;
 
 import com.google.android.material.textfield.TextInputEditText;
 
@@ -22,7 +23,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Objects;
 
-class JavaActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, CompoundButton.OnCheckedChangeListener {
+public class JavaActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, CompoundButton.OnCheckedChangeListener {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -37,7 +38,7 @@ class JavaActivity extends AppCompatActivity implements AdapterView.OnItemSelect
 
         //precision
         AppCompatSpinner precisionSpinner = findViewById(R.id.as_precision);
-        precisionSpinner.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, (String[]) precisions.toArray()));
+        precisionSpinner.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1,  precisions.toArray()));
         precisionSpinner.setSelection(getResources().getInteger(R.integer.default_precision));
         precisionSpinner.setOnItemSelectedListener(this);
 
@@ -100,7 +101,7 @@ class JavaActivity extends AppCompatActivity implements AdapterView.OnItemSelect
 
         String shorter = NumberShort.INSTANCE.shorten(number, round, suffix, precision, RoundingMode.valueOf(roundingMode));
 
-        ((TextInputEditText) findViewById(R.id.txt_output)).setText(shorter);
+        ((AppCompatTextView) findViewById(R.id.txt_output)).setText(shorter);
     }
 
     @Override

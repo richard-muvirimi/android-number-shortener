@@ -11,7 +11,7 @@ android {
         applicationId "com.tyganeutronics.activator"
         minSdkVersion 14
         targetSdkVersion 30
-        versionCode 1
+        versionCode 3
         versionName "1.0"
     }
 
