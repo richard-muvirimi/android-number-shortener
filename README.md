@@ -15,6 +15,10 @@ Shortens a given number to at most three digits with an SI unit after
 3. 123456 => 123 k (kilo)
 4. 1234567 => 1 M (mega)
 
+### Sample App
+
+[![Get it on playstore](https://steverichey.github.io/google-play-badge-svg/img/en_get.svg)](https://play.google.com/store/apps/details?id=com.tyganeutronics.activator)
+
 ### Installation
 
 #### Jitpack
