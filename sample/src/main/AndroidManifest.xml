@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.NumberShortener" >
 
-        <activity android:name=".JavaActivity">
+        <activity android:name=".JavaActivity" android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

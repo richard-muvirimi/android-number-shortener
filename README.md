@@ -4,9 +4,8 @@
 
 Shortens a given number to at most three digits with an SI unit after
 
-[![CI](https://github.com/tygalive/Number-Shortener/workflows/CI/badge.svg?branch=master)](https://github.com/tygalive/Number-Shortener/actions)
-[![JitPack](https://jitpack.io/v/kizitonwose/CalendarView.svg)](https://jitpack.io/#tygalive/Number-Shortener)
-[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://github.com/tygalive/Number-Shortener/blob/master/LICENSE.md)
+[![JitPack](https://jitpack.io/v/kizitonwose/CalendarView.svg)](https://jitpack.io/#richard-muvirimi/android-number-shortener)
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://github.com/richard-muvirimi/android-number-shortener/blob/master/LICENSE.md)
 
 ### Samples
 
@@ -25,17 +24,17 @@ Shortens a given number to at most three digits with an SI unit after
 
 Full details on how to import
 
-[JitPack](https://jitpack.io/#tygalive/Number-Shortener/1.0)
+[JitPack](https://jitpack.io/#richard-muvirimi/android-number-shortener/1.0.1)
 
 #### Gradle
 
 **Step 1.**
 Add it in your root build.gradle at the end of repositories:
 
-```
+```groovy
     allprojects {
 		repositories {
-			...
+			// Other repositories
 			maven { url 'https://jitpack.io' }
 		}
 	}
@@ -44,9 +43,9 @@ Add it in your root build.gradle at the end of repositories:
 **Step 2.**
 Add the dependency
 
-```
+```groovy
     dependencies {
-	        implementation 'com.github.tygalive:Number-Shortener:1.0'
+	        implementation 'com.github.richard-muvirimi:android-number-shortener:1.0.1'
 	}
 ```
 
@@ -56,12 +55,14 @@ Add the dependency
 
 ```kotlin
     val shorter = (123456).shorten()
+    //123.0 k
 ```
 
 #### Java
 
 ```java
     String shorter = NumberShort.INSTANCE.shorten(123456);
+    //123.0 k
 ```
 
 #### Parameters
@@ -79,7 +80,7 @@ All parameters are optional and with kotlin named parameters can be used just to
 
 ### Contributing
 
-You are welcome to send push requests (Just remember to add you name to the contributers list) or raise issues
+You are welcome to send push requests (Just remember to add your name to the contributors list) or simply raise an issue
 
 ### License
 
