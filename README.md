@@ -4,7 +4,7 @@
 
 Shortens a given number to at most three digits with an SI unit after
 
-[![JitPack](https://jitpack.io/v/kizitonwose/CalendarView.svg)](https://jitpack.io/#richard-muvirimi/android-number-shortener)
+[![JitPack](https://jitpack.io/v/richard-muvirimi/android-number-shortener.svg)](https://jitpack.io/#richard-muvirimi/android-number-shortener)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://github.com/richard-muvirimi/android-number-shortener/blob/master/LICENSE.md)
 
 ### Samples
@@ -24,7 +24,7 @@ Shortens a given number to at most three digits with an SI unit after
 
 Full details on how to import
 
-[JitPack](https://jitpack.io/#richard-muvirimi/android-number-shortener/1.0.1)
+[JitPack](https://jitpack.io/#richard-muvirimi/android-number-shortener)
 
 #### Gradle
 
@@ -45,7 +45,7 @@ Add the dependency
 
 ```groovy
     dependencies {
-	        implementation 'com.github.richard-muvirimi:android-number-shortener:1.0.1'
+	        implementation 'com.github.richard-muvirimi:android-number-shortener:Tag'
 	}
 ```
 
