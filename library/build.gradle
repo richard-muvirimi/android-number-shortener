@@ -6,11 +6,11 @@ plugins {
 
 android {
     namespace 'com.tyganeutronics.numbershortener'
-    compileSdkVersion 33
+    compileSdk 34
 
     defaultConfig {
-        minSdkVersion 14
-        targetSdkVersion 33
+        minSdk 14
+        targetSdk 34
     }
 
     buildTypes {
@@ -20,18 +20,18 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_11
-        targetCompatibility JavaVersion.VERSION_11
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = '11'
+        jvmTarget = JavaVersion.VERSION_17
     }
 }
 
 dependencies {
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    implementation 'androidx.core:core-ktx:1.9.0'
+    implementation 'androidx.core:core-ktx:1.10.1'
 }
 
 publishing {
@@ -43,7 +43,7 @@ publishing {
             version = '1.0.1'
 
             afterEvaluate {
-                from components.release
+                from components.findByName('release')
             }
 
         }

@@ -5,15 +5,14 @@ plugins {
 
 android {
     namespace 'com.tyganeutronics.activator'
-    compileSdkVersion 33
-    buildToolsVersion "33.0.1"
+    compileSdk 34
 
     defaultConfig {
         applicationId "com.tyganeutronics.activator"
-        minSdkVersion 14
-        targetSdkVersion 33
-        versionCode 4
-        versionName "1.0.1"
+        minSdk 14
+        targetSdk 34
+        versionCode 5
+        versionName "1.0.2"
     }
 
     buildTypes {
@@ -23,21 +22,21 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_11
-        targetCompatibility JavaVersion.VERSION_11
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = '11'
+        jvmTarget = JavaVersion.VERSION_17
     }
 }
 
 dependencies {
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    implementation 'androidx.core:core-ktx:1.9.0'
+    implementation 'androidx.core:core-ktx:1.10.1'
 
     implementation project(path: ':library')
 
     implementation 'androidx.appcompat:appcompat:1.6.1'
-    implementation 'com.google.android.material:material:1.8.0'
+    implementation 'com.google.android.material:material:1.9.0'
 }
