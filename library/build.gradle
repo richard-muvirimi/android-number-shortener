@@ -40,7 +40,7 @@ publishing {
         release(MavenPublication) {
             groupId = 'com.github.richard-muvirimi'
             artifactId = 'library'
-            version = '1.0.1'
+            version = '1.0.3'
 
             afterEvaluate {
                 from components.findByName('release')
