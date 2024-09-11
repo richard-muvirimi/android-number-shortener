@@ -2,14 +2,16 @@ package com.tyganeutronics.activator
 
 import android.os.Bundle
 import android.view.View
-import android.widget.*
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.CompoundButton
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatCheckBox
 import androidx.appcompat.widget.AppCompatSpinner
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.widget.addTextChangedListener
 import com.google.android.material.textfield.TextInputEditText
-import java.lang.Math.pow
+import com.tyganeutronics.numbershortener.shorten
 import java.math.RoundingMode
 
 class KotlinActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener,
@@ -61,26 +63,36 @@ class KotlinActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener,
      * The magic happens here
      */
     private fun shorten() {
-        val number = findViewById<TextInputEditText>(R.id.ed_input).text.toString().ifEmpty { "0" }.toBigDecimal()
+        val number = findViewById<TextInputEditText>(R.id.ed_input)
+            .text
+            .toString()
+            .ifEmpty { "0" }
+            .toBigDecimal()
 
-        val round = findViewById<AppCompatCheckBox>(R.id.cb_round).isChecked
+        val round = findViewById<AppCompatCheckBox>(R.id.cb_round)
+            .isChecked
 
         //precision
-        val precision =
-            findViewById<AppCompatSpinner>(R.id.as_precision).selectedItem.toString().toInt()
+        val precision = findViewById<AppCompatSpinner>(R.id.as_precision)
+            .selectedItem
+            .toString()
+            .toInt()
 
         //round
-        val roundingMode = findViewById<AppCompatSpinner>(R.id.as_round).selectedItemPosition
+        val roundingMode = findViewById<AppCompatSpinner>(R.id.as_round)
+            .selectedItemPosition
 
         //suffix
-        val suffix = findViewById<TextInputEditText>(R.id.ed_suffix).text.toString()
+        val suffix = findViewById<TextInputEditText>(R.id.ed_suffix)
+            .text
+            .toString()
 
-        findViewById<AppCompatTextView>(R.id.txt_output).text =
-            number.shorten(
+        findViewById<AppCompatTextView>(R.id.txt_output).text = number
+            .shorten(
                 round = round,
                 precision = precision,
                 suffix = suffix,
-                roundMode = RoundingMode.valueOf( roundingMode)
+                roundMode = RoundingMode.valueOf(roundingMode)
             )
     }
 

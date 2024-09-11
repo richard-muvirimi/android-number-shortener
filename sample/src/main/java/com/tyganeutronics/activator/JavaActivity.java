@@ -15,6 +15,7 @@ import androidx.appcompat.widget.AppCompatSpinner;
 import androidx.appcompat.widget.AppCompatTextView;
 
 import com.google.android.material.textfield.TextInputEditText;
+import com.tyganeutronics.numbershortener.NumberShort;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -36,7 +37,7 @@ public class JavaActivity extends AppCompatActivity implements AdapterView.OnIte
 
         //precision
         AppCompatSpinner precisionSpinner = findViewById(R.id.as_precision);
-        precisionSpinner.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1,  precisions.toArray()));
+        precisionSpinner.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, precisions.toArray()));
         precisionSpinner.setSelection(getResources().getInteger(R.integer.default_precision));
         precisionSpinner.setOnItemSelectedListener(this);
 

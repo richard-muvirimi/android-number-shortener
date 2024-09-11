@@ -1,4 +1,4 @@
-package com.tyganeutronics.activator
+package com.tyganeutronics.numbershortener
 
 import java.math.BigDecimal
 import java.math.MathContext
