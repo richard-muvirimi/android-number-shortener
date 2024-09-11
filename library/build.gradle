@@ -40,7 +40,7 @@ publishing {
         release(MavenPublication) {
             groupId = 'com.tyganeutronics.numbershortener'
             artifactId = 'library'
-            version = '1.0.4'
+            version = "$library_version"
 
             afterEvaluate {
                 from components.findByName('release')
