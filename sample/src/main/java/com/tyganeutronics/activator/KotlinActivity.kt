@@ -1,5 +1,6 @@
 package com.tyganeutronics.activator
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
@@ -8,10 +9,12 @@ import android.widget.ArrayAdapter
 import android.widget.CompoundButton
 import android.widget.ScrollView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.AppCompatButton
 import androidx.appcompat.widget.AppCompatCheckBox
 import androidx.appcompat.widget.AppCompatSpinner
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.coordinatorlayout.widget.CoordinatorLayout
+import androidx.core.net.toUri
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updateLayoutParams
@@ -21,7 +24,7 @@ import com.tyganeutronics.numbershortener.shorten
 import java.math.RoundingMode
 
 class KotlinActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener,
-    CompoundButton.OnCheckedChangeListener {
+    CompoundButton.OnCheckedChangeListener, View.OnClickListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,6 +60,9 @@ class KotlinActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener,
                 addTextChangedListener { shorten() }
             }
         }
+
+        findViewById<AppCompatButton>(R.id.btn_privacy_policy).setOnClickListener(this)
+
 
         applyWindowInsets()
     }
@@ -114,6 +120,19 @@ class KotlinActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener,
 
     override fun onNothingSelected(parent: AdapterView<*>?) {
 
+    }
+
+    override fun onClick(view: View?) {
+        if (view != null) {
+            when (view.id) {
+                R.id.btn_privacy_policy -> {
+                    val intent = Intent()
+                    intent.action = Intent.ACTION_VIEW
+                    intent.data = getString(R.string.privacy_policy_url).toUri()
+                    startActivity(intent)
+                }
+            }
+        }
     }
 
     fun applyWindowInsets() {

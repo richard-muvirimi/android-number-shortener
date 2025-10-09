@@ -1,5 +1,7 @@
 package com.tyganeutronics.activator;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -12,6 +14,7 @@ import android.widget.CompoundButton;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.AppCompatCheckBox;
 import androidx.appcompat.widget.AppCompatSpinner;
 import androidx.appcompat.widget.AppCompatTextView;
@@ -28,7 +31,7 @@ import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class JavaActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, CompoundButton.OnCheckedChangeListener {
+public class JavaActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, CompoundButton.OnCheckedChangeListener, View.OnClickListener {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -75,6 +78,8 @@ public class JavaActivity extends AppCompatActivity implements AdapterView.OnIte
                 }
             });
         }
+
+        findViewById(R.id.btn_privacy_policy).setOnClickListener(this);
 
         applyWindowInsets();
 
@@ -124,6 +129,18 @@ public class JavaActivity extends AppCompatActivity implements AdapterView.OnIte
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
         shorten();
+    }
+
+    @Override
+    public void onClick(View view) {
+        if (view != null) {
+            if (view.getId() == R.id.btn_privacy_policy) {
+                Intent intent = new Intent();
+                intent.setAction(Intent.ACTION_VIEW);
+                intent.setData(Uri.parse(getString(R.string.privacy_policy_url)));
+                startActivity(intent);
+            }
+        }
     }
 
     public void applyWindowInsets( ) {

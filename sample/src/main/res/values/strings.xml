@@ -27,4 +27,8 @@
         <item>ROUND HALF DOWN</item>
         <item>ROUND HALF EVEN</item>
     </string-array>
+
+    <string name="privacy_policy" translatable="false">Privacy Policy</string>
+    <string name="privacy_policy_url" translatable="false">https://site.tyganeutronics.com/number-shortener-library-privacy-policy/</string>
+
 </resources>
