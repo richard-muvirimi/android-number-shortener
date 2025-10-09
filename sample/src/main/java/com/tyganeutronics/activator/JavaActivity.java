@@ -4,15 +4,21 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CompoundButton;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatCheckBox;
 import androidx.appcompat.widget.AppCompatSpinner;
 import androidx.appcompat.widget.AppCompatTextView;
+import androidx.core.graphics.Insets;
+import androidx.core.view.OnApplyWindowInsetsListener;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.tyganeutronics.numbershortener.NumberShort;
@@ -70,6 +76,8 @@ public class JavaActivity extends AppCompatActivity implements AdapterView.OnIte
             });
         }
 
+        applyWindowInsets();
+
     }
 
     @Override
@@ -104,7 +112,7 @@ public class JavaActivity extends AppCompatActivity implements AdapterView.OnIte
     }
 
     @Override
-    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+    public void onCheckedChanged(@NonNull CompoundButton buttonView, boolean isChecked) {
         shorten();
     }
 
@@ -116,5 +124,28 @@ public class JavaActivity extends AppCompatActivity implements AdapterView.OnIte
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
         shorten();
+    }
+
+    public void applyWindowInsets( ) {
+
+        // https://developer.android.com/develop/ui/views/layout/edge-to-edge#kotlin
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.layout_container), new  OnApplyWindowInsetsListener(){
+            @NonNull
+            @Override
+            public WindowInsetsCompat onApplyWindowInsets(@NonNull View v, @NonNull WindowInsetsCompat windowInsets) {
+                Insets insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars());
+
+                ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) v.getLayoutParams();
+
+                params.leftMargin = insets.left;
+                params.topMargin = insets.top;
+                params.bottomMargin = insets.bottom;
+                params.rightMargin = insets.right;
+
+                v.setLayoutParams(params);
+
+                return WindowInsetsCompat.CONSUMED;
+            }
+        });
     }
 }

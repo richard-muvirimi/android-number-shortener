@@ -2,13 +2,19 @@ package com.tyganeutronics.activator
 
 import android.os.Bundle
 import android.view.View
+import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.CompoundButton
+import android.widget.ScrollView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatCheckBox
 import androidx.appcompat.widget.AppCompatSpinner
 import androidx.appcompat.widget.AppCompatTextView
+import androidx.coordinatorlayout.widget.CoordinatorLayout
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updateLayoutParams
 import androidx.core.widget.addTextChangedListener
 import com.google.android.material.textfield.TextInputEditText
 import com.tyganeutronics.numbershortener.shorten
@@ -51,6 +57,8 @@ class KotlinActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener,
                 addTextChangedListener { shorten() }
             }
         }
+
+        applyWindowInsets()
     }
 
     override fun onStart() {
@@ -96,7 +104,7 @@ class KotlinActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener,
             )
     }
 
-    override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {
+    override fun onCheckedChanged(buttonView: CompoundButton, isChecked: Boolean) {
         shorten()
     }
 
@@ -106,6 +114,23 @@ class KotlinActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener,
 
     override fun onNothingSelected(parent: AdapterView<*>?) {
 
+    }
+
+    fun applyWindowInsets() {
+
+        // https://developer.android.com/develop/ui/views/layout/edge-to-edge#kotlin
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById<ScrollView>(R.id.layout_container)) { v, windowInsets ->
+            val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
+
+            v.updateLayoutParams<ViewGroup.MarginLayoutParams> {
+                leftMargin = insets.left
+                topMargin = insets.top
+                bottomMargin = insets.bottom
+                rightMargin = insets.right
+            }
+
+            WindowInsetsCompat.CONSUMED
+        }
     }
 
 }
