@@ -1,0 +1,151 @@
+name: Auto Release on Version Change
+
+on:
+  workflow_dispatch: # Allow manual triggering
+  push:
+    branches: [ release ]
+    paths:
+      - 'build.gradle'
+
+jobs:
+  check-version-and-release:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 2  # Fetch current and previous commit
+
+    - name: Extract current version
+      id: current_version
+      run: |
+        VERSION=$(grep -oP "ext\.library_version = '\K[^']*" build.gradle)
+        echo "version=$VERSION" >> $GITHUB_OUTPUT
+        echo "Current version: $VERSION"
+
+    - name: Extract previous version
+      id: previous_version
+      run: |
+        git checkout HEAD~1 -- build.gradle 2>/dev/null || echo "No previous version found"
+        if [ -f build.gradle ]; then
+          PREV_VERSION=$(grep -oP "ext\.library_version = '\K[^']*" build.gradle 2>/dev/null || echo "")
+        else
+          PREV_VERSION=""
+        fi
+        git checkout HEAD -- build.gradle
+        echo "previous=$PREV_VERSION" >> $GITHUB_OUTPUT
+        echo "Previous version: $PREV_VERSION"
+
+    - name: Check if version changed
+      id: version_check
+      run: |
+        CURRENT="${{ steps.current_version.outputs.version }}"
+        PREVIOUS="${{ steps.previous_version.outputs.previous }}"
+        
+        if [ "$CURRENT" != "$PREVIOUS" ] && [ ! -z "$CURRENT" ]; then
+          echo "changed=true" >> $GITHUB_OUTPUT
+          echo "Version changed from '$PREVIOUS' to '$CURRENT'"
+        else
+          echo "changed=false" >> $GITHUB_OUTPUT
+          echo "Version unchanged or invalid"
+        fi
+
+    - name: Check if tag already exists
+      id: tag_check
+      if: steps.version_check.outputs.changed == 'true'
+      run: |
+        TAG="v${{ steps.current_version.outputs.version }}"
+        if git rev-parse "$TAG" >/dev/null 2>&1; then
+          echo "exists=true" >> $GITHUB_OUTPUT
+          echo "Tag $TAG already exists"
+        else
+          echo "exists=false" >> $GITHUB_OUTPUT
+          echo "Tag $TAG does not exist"
+        fi
+
+    - name: Set up JDK 17
+      if: steps.version_check.outputs.changed == 'true' && steps.tag_check.outputs.exists == 'false'
+      uses: actions/setup-java@v4
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+
+    - name: Initialize git submodules
+      if: steps.version_check.outputs.changed == 'true' && steps.tag_check.outputs.exists == 'false'
+      run: |
+        git submodule sync --recursive
+        git submodule update --init --recursive
+
+    - name: Grant execute permission for gradlew
+      if: steps.version_check.outputs.changed == 'true' && steps.tag_check.outputs.exists == 'false'
+      run: chmod +x gradlew
+
+    - name: Build and test
+      if: steps.version_check.outputs.changed == 'true' && steps.tag_check.outputs.exists == 'false'
+      run: ./gradlew clean assembleRelease -x lint --stacktrace
+
+    - name: Generate changelog
+      id: changelog
+      if: steps.version_check.outputs.changed == 'true' && steps.tag_check.outputs.exists == 'false'
+      run: |
+        # Get commits since last tag
+        LAST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "")
+        
+        if [ -z "$LAST_TAG" ]; then
+          # No previous tags, get all commits
+          CHANGELOG=$(git log --pretty=format:"- %s" --no-merges)
+        else
+          # Get commits since last tag
+          CHANGELOG=$(git log ${LAST_TAG}..HEAD --pretty=format:"- %s" --no-merges)
+        fi
+        
+        # If no changes, create a default message
+        if [ -z "$CHANGELOG" ]; then
+          CHANGELOG="- Version bump to ${{ steps.current_version.outputs.version }}"
+        fi
+        
+        # Save changelog to output
+        echo "changelog<<EOF" >> $GITHUB_OUTPUT
+        echo "$CHANGELOG" >> $GITHUB_OUTPUT
+        echo "EOF" >> $GITHUB_OUTPUT
+
+    - name: Create Release
+      if: steps.version_check.outputs.changed == 'true' && steps.tag_check.outputs.exists == 'false'
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: v${{ steps.current_version.outputs.version }}
+        release_name: Release v${{ steps.current_version.outputs.version }}
+        body: |
+          ## Changes in v${{ steps.current_version.outputs.version }}
+          
+          ${{ steps.changelog.outputs.changelog }}
+          
+          ### JitPack Usage
+          
+          ```gradle
+          implementation 'com.github.richard-muvirimi:android-timezone-picker:v${{ steps.current_version.outputs.version }}'
+          ```
+          
+          This library includes:
+          - Enhanced timezone picker components (AppCompat, BottomSheet, Fragment)
+          - Google's original timezone picker (base functionality)
+          - Latest IANA timezone data
+          
+          All components are available from the single dependency above.
+        draft: false
+        prerelease: false
+
+    - name: Upload Release Assets
+      if: steps.version_check.outputs.changed == 'true' && steps.tag_check.outputs.exists == 'false'
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./library/build/outputs/aar/library-release.aar
+        asset_name: timezonepicker-${{ steps.current_version.outputs.version }}.aar
+        asset_content_type: application/java-archive
+      continue-on-error: true
